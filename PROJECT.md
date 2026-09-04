@@ -32,10 +32,16 @@ Restored in our `work` branch — a candidate to offer upstream.
 
 ## 2 · Bake it in
 
+⭐ 2026-09-04: SHIPPED. `:latest` = sha256:4a0db2733eab75403212b8f7b8688be5c2a6271a4a4bd50ad4d6a45c50d500c5
+(tag 2026-09-04-factors). Full gate green, 68 of 68, 39 min on worker18 at 13Gi.
+⚠️ The gate OOMKilled three times getting there and none of it was the dependency: notebook 60
+alone on the PREVIOUS image died in 77s at the same limit. market_id is a 77-char token and the
+sort copied 20M of them. Fixed in 60, 62, 63, 65 — cast to category after to_pandas, 8.01 -> 4.53 GB.
+
 - [x] requirements group in `vectorbt.pro/scripts/requirements/`, installed from our fork
-- [ ] `check_vbt_env.py` exercises it — FIT a model, do not merely import (the rule earned
+- [x] `check_vbt_env.py` exercises it — FIT a model, do not merely import (the rule earned
       by lightgbm: a wheel that unpacked is not a shared object that links)
-- [ ] candidate tag, full gate green on that digest, then move `:latest`
+- [x] candidate tag, full gate green on that digest, then move `:latest`
 
 ## 3 · vbt examples
 
