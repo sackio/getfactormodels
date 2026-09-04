@@ -28,7 +28,7 @@ Restored in our `work` branch — a candidate to offer upstream.
 - [x] `tests/test_http.py::test_check_connection_fallback_to_get` — same
 - [x] `model=5` as an int raises `AttributeError: 'int' object has no attribute 'startswith'`
       while the constructor advertises `model: int | str`. Pass `model="5"` today.
-- [ ] decide, per model, what a smoke test asserts — every one of the 15 must pull
+- [x] decide, per model, what a smoke test asserts — every one of the 15 must pull
 
 ## 2 · Bake it in
 
@@ -57,6 +57,12 @@ Per-model currency, pulled from the installed package:
 | q5, Pastor-Stambaugh liquidity | 2024-12 |
 | DHS | 2023-12 |
 | Stambaugh-Yuan mispricing | 2016-12 |
+
+⚠️ Re-measured 2026-09-04 12:15Z across all 15 — the table above was 7 models and is already one
+month stale: Fama-French/Carhart/AQR6/BAB/QMJ/HML-Devil/VME/ConditionalCAPM now reach 2026-07,
+having read 2026-06 three hours earlier. ICR 2025-05 · Q/Barillas-Shanken/Liquidity 2024-12 ·
+DHS 2023-12 · HighIncomeCCAPM 2022-12 (annual only) · Mispricing 2016-12.
+⇒ The spread runs a decade, and it MOVES. That is the coverage-cliff notebook's subject.
 
 ⛔ Author marks the package `Development Status :: 2 - Pre-Alpha` and the README says
 "don't rely on it for anything". That is why §2 gates on a full green gate, not on an import.
