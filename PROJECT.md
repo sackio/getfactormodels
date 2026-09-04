@@ -45,6 +45,7 @@ sort copied 20M of them. Fixed in 60, 62, 63, 65 — cast to category after to_p
 
 ## 3 · vbt examples
 
+⭐ 70 shipped 2026-09-04 — passes in 15.7s. 70 notebooks in the set.
 ⭐ 69 shipped 2026-09-04 — `examples/69-the-factor-file-decides-how-much-data-exists.ipynb`,
 passes in 53.1s. AAPL 132 monthly returns: FF5 keeps 132, q5 120, DHS 108, Mispricing 24 (drops
 108, silently). Alpha's sign moves with the file; max |t| across the four is 0.52, so it asserts
@@ -54,8 +55,12 @@ One notebook per mechanism, not per model. Candidates, each needing its own meas
 
 - [x] the coverage cliff — series end anywhere from 2016-12 to 2026-06, and a factor set that
       stops in 2016 regresses happily against returns through 2026 and silently drops rows
-- [ ] what a factor model does to `Portfolio.from_signals` — alpha vs the raw return
-- [ ] the models disagree: same asset, same window, different factor set, different residual
+- [x] ~~what a factor model does to `from_signals`~~ and ~~the models disagree~~ — AMENDED
+      2026-09-04: 69 measures both (alpha's sign moves with the file; from_signals runs on the
+      residuals), so two further notebooks would repeat it. Replaced by 70, which covers what
+      Ben actually asked for — ALL fifteen models — and pins a distinct mechanism.
+- [x] 70 — the risk-free column is spelled RF / RF_Q / RF_AQR, so `!= "RF"` leaves it among the
+      predictors on 6 of 15, carrying |t| across 2.0 on four of them
 
 ## Measured facts (2026-09-04)
 
