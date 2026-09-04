@@ -3,6 +3,9 @@
 Canonical task list for this project. ⛔ Not the pin, not Slack: this file is the list, and
 the build contradicts it when it is wrong.
 
+✅ **DONE 2026-09-04 23:10Z — final gate 70 of 70 against `:latest`, verified three ways: the
+runner's summary, exit 0 / Completed, and 70 executed notebooks on disk by mtime.**
+
 **DONE means:** all 15 models pull, each is asserted in a vbt example notebook, and the whole
 `vectorbt.pro/examples/` set passes the weekly gate against this fork installed in
 `vbt-env:latest`.
