@@ -229,12 +229,36 @@ class _HttpClient:
 
 
     def check_connection(self, url: str) -> bool:
-        if self._client is None: 
-            return False
+        """Ping a url. HEAD first, then GET, because plenty of hosts reject HEAD.
+
+        ⛔ Restored from 6cbb0a9 ("clean up http client"), which replaced the whole body with a
+        bare HEAD. That commit dropped four behaviours the test suite still asserts: the
+        ClientNotOpenError raise, the GET fallback, the 4-second timeout, and a scoped
+        `except httpx.RequestError` — the bare `except:` it left also swallowed KeyboardInterrupt
+        and SystemExit. tests/test_http.py has been red since.
+        """
+        check_timeout = 4.0
+
+        if self._client is None:
+            raise ClientNotOpenError("HttpClient is not open. Use in a `with` block.")
+
         try:
-            return self._client.head(url, timeout=5.0).is_success
-        except:
+            log.info("Attempting HEAD: %s...", url)
+            response = self._client.head(url, timeout=check_timeout)
+            if response.is_success:
+                log.info("URL:%s status: %s", url, response.status_code)
+                return True
+
+            log.info("Falling back to GET...")
+            response = self._client.get(url, timeout=check_timeout)
+            if response.is_success:
+                return True
+
+            log.info("Couldn't establish connection.")
+        except httpx.RequestError:
             return False
+
+        return False
 
     # TODO: user needs to acces this. force, or clear cache?
     def _clear_cache(self) -> None:

@@ -129,14 +129,23 @@ def test_download_with_http_client(temp_cache_dir):
     mock_response.status_code = 200
     mock_response.headers = {"ETag": "123"}
     
+    # ⛔ Patch `stream`, not `get`. download() has streamed since 273f959 (2026-01-18); this test
+    # patched `_client.get`, which download never calls, so the unpatched stream went to the real
+    # network and the assertion compared example.com's HTML against b"test data". A unit test that
+    # reaches the internet fails for the wrong reason here — and would have PASSED for the wrong
+    # reason against any endpoint that happened to return the expected bytes.
+    mock_response.headers = {"ETag": "123", "Content-Length": "9"}
+    mock_response.read.return_value = b"test data"
+
     with client, patch.object(client.cache, 'get') as mock_cache_get, \
-             patch.object(client._client, 'get') as mock_get:
-        
-        mock_cache_get.return_value = (None, None) 
-        mock_get.return_value = mock_response
-        
+             patch.object(client._client, 'stream') as mock_stream:
+
+        mock_cache_get.return_value = (None, None)
+        mock_stream.return_value.__enter__.return_value = mock_response
+
         result = client.download("https://example.com")
         assert result == b"test data"
+        mock_stream.assert_called_once_with("GET", "https://example.com")
 
 
 def test_download_returns_cached_data(open_http_client):
