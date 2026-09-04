@@ -15,10 +15,14 @@ the build contradicts it when it is wrong.
 
 ## 1 · Make it work
 
-- [ ] `tests/test_http.py::test_http_error_when_used_outside_context` — fails on a clean
+⭐ 2026-09-04: suite green, 42 pass / 0 fail, from a 39/3 baseline. Root cause was one upstream
+commit, 6cbb0a9 "clean up http client", which deleted four behaviours its own tests still assert.
+Restored in our `work` branch — a candidate to offer upstream.
+
+- [x] `tests/test_http.py::test_http_error_when_used_outside_context` — fails on a clean
       checkout (baseline 2026-09-04: 39 pass, 3 fail)
-- [ ] `tests/test_http.py::test_download_with_http_client` — same
-- [ ] `tests/test_http.py::test_check_connection_fallback_to_get` — same
+- [x] `tests/test_http.py::test_download_with_http_client` — same
+- [x] `tests/test_http.py::test_check_connection_fallback_to_get` — same
 - [ ] `model=5` as an int raises `AttributeError: 'int' object has no attribute 'startswith'`
       while the constructor advertises `model: int | str`. Pass `model="5"` today.
 - [ ] decide, per model, what a smoke test asserts — every one of the 15 must pull
