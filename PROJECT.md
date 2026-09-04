@@ -45,9 +45,14 @@ sort copied 20M of them. Fixed in 60, 62, 63, 65 — cast to category after to_p
 
 ## 3 · vbt examples
 
+⭐ 69 shipped 2026-09-04 — `examples/69-the-factor-file-decides-how-much-data-exists.ipynb`,
+passes in 53.1s. AAPL 132 monthly returns: FF5 keeps 132, q5 120, DHS 108, Mispricing 24 (drops
+108, silently). Alpha's sign moves with the file; max |t| across the four is 0.52, so it asserts
+that and reports the spread rather than a number.
+
 One notebook per mechanism, not per model. Candidates, each needing its own measurement first:
 
-- [ ] the coverage cliff — series end anywhere from 2016-12 to 2026-06, and a factor set that
+- [x] the coverage cliff — series end anywhere from 2016-12 to 2026-06, and a factor set that
       stops in 2016 regresses happily against returns through 2026 and silently drops rows
 - [ ] what a factor model does to `Portfolio.from_signals` — alpha vs the raw return
 - [ ] the models disagree: same asset, same window, different factor set, different residual
