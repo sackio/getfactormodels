@@ -23,7 +23,7 @@ Restored in our `work` branch — a candidate to offer upstream.
       checkout (baseline 2026-09-04: 39 pass, 3 fail)
 - [x] `tests/test_http.py::test_download_with_http_client` — same
 - [x] `tests/test_http.py::test_check_connection_fallback_to_get` — same
-- [ ] `model=5` as an int raises `AttributeError: 'int' object has no attribute 'startswith'`
+- [x] `model=5` as an int raises `AttributeError: 'int' object has no attribute 'startswith'`
       while the constructor advertises `model: int | str`. Pass `model="5"` today.
 - [ ] decide, per model, what a smoke test asserts — every one of the 15 must pull
 
