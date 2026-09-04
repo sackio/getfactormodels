@@ -240,7 +240,13 @@ class FactorModel(ABC):
             import pandas as pd  # check for if user has pd?
             df = self.data.to_pandas()
             if "date" in df.columns:
+                # ⛔ The arrow `date` column arrives as a STRING, so set_index alone yields an
+                # Index of dtype 'str'. That is not inert: it will not align with a price series'
+                # DatetimeIndex, `.loc["2020":]` does not slice it, and a join against dated
+                # returns produces an empty frame rather than an error. Parse it here so a
+                # pandas caller gets something that behaves like a date index.
                 df = df.set_index("date")
+                df.index = pd.to_datetime(df.index)
             return df
         except ImportError:
             raise ImportError("Requires Pandas. Try `pip install pandas`") from None

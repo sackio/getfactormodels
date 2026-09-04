@@ -100,6 +100,11 @@ preview = true
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 python_files = ["test_*.py"]
+# ⛔ Network tests are opt-in: `pytest -m integration`. A test that reaches the internet from the
+# default run is how tests/test_http.py spent months comparing example.com's HTML to its expected
+# bytes without anyone noticing what it was really doing.
+markers = ["integration: reaches the network; excluded from the default run"]
+addopts = "-m 'not integration'"
 
 [tool.coverage.run]
 source = ["getfactormodels"]
