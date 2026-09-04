@@ -70,7 +70,12 @@ class FamaFrenchFactors(FactorModel, RegionMixin):
                  **kwargs) -> None:
         """Initialize a Fama-French factor model."""
         # model keys (ff3) to int
-        self.model = model.replace('ff', '') if model.startswith('ff') else str(model)
+        # ⛔ Coerce BEFORE testing the prefix. The signature advertises `int | str` and the else
+        # branch already calls str(), so an int was clearly meant to work — but `model.startswith`
+        # is evaluated first and an int has no .startswith, so FamaFrenchFactors(model=5) raised
+        # `AttributeError: 'int' object has no attribute 'startswith'` before reaching it.
+        model = str(model)
+        self.model = model.replace('ff', '') if model.startswith('ff') else model
         super().__init__(frequency=frequency, model=model, **kwargs)
         
         self.region = region

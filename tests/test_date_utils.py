@@ -86,3 +86,15 @@ def test_parse_quarterly_dates_empty_return():
     empty = pa.table({"year": [], "period": []})
     result = parse_quarterly_dates(empty)
     assert result.num_rows == 0
+
+
+def test_fama_french_accepts_int_model():
+    """`model` is documented as `int | str`, so an int must not raise.
+
+    ⛔ Regression: `model.startswith('ff')` was evaluated before the str() coercion, so
+    FamaFrenchFactors(model=5) died with AttributeError while the signature promised int support.
+    """
+    from getfactormodels import FamaFrenchFactors
+
+    for given, expected in ((5, '5'), ('5', '5'), ('ff5', '5'), (3, '3'), ('ff3', '3')):
+        assert FamaFrenchFactors(frequency='m', model=given).model == expected
